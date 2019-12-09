@@ -1,29 +1,29 @@
-import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import javax.swing.Box;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-public class TextAreaFrame extends JFrame
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class PanelFrame extends JFrame
 {
     private JTextArea textRead; // demo string
-    private JTextArea textWrite; // stringa kopjohet ketu
     private JButton showList; // inicializon kopjimin e string
     private JButton addToList;
+    private JPanel buttonJPanel;
 
-    public TextAreaFrame()
+
+    public PanelFrame()
     {
-        String filePath="PresidentUsa.txt";
+        super( "President USA" );
 
-        Box box = Box.createVerticalBox();
+        String filePath="PresidentUsa.txt";
+        buttonJPanel = new JPanel();
+        buttonJPanel.setLayout( new GridLayout( 1, 5 ) );
 
         File_IO IO = new File_IO();
 
-
         textRead = new JTextArea(30, 30 );
-        textRead.setEditable( false );
+
 
 
         showList = new JButton( "Lexo Presidentet" );
@@ -40,23 +40,21 @@ public class TextAreaFrame extends JFrame
         addToList = new JButton( "Shto President" );
 
 
-        textWrite = new JTextArea( 2, 15 );
-
 
         addToList.addActionListener(
                 new ActionListener()
                 {
                     public void actionPerformed( ActionEvent event )
                     {
-                        String text = textWrite.getText();
+                        String text = textRead.getText();
                         IO.AppendToFile( text,filePath);
                     }
                 }
         );
-        box.add( showList );
-        box.add( new JScrollPane( textRead ) );
-        box.add( addToList );
-        box.add( new JScrollPane( textWrite ) );
-        add( box );
+        buttonJPanel.add( showList );
+        add( new JScrollPane( textRead ) );
+        buttonJPanel.add( addToList );
+
+        add( buttonJPanel, BorderLayout.SOUTH );
     }
 }
